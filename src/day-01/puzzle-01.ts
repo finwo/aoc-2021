@@ -1,7 +1,4 @@
-import readline      from 'readline';
-import fs            from 'fs';
-import events        from 'events';
-
+import { lineByLine } from '../common';
 
 let lastDepth      = null;
 let increasedTotal = 0;
@@ -14,12 +11,7 @@ let texts = [
 
 (async () => {
 
-  const rl = readline.createInterface({
-    input  : fs.createReadStream(__dirname + '/input-01'),
-    output : null,
-  });
-
-  rl.on('line', line => {
+  await lineByLine(__dirname + '/input-01', line => {
     if ((!line) || isNaN(line)) return;
 
     const depth = parseInt(line);
@@ -35,13 +27,10 @@ let texts = [
     lastDepth = depth;
   });
 
-  await events.once(rl, 'close');
-
   process.stdout.write('\n\n');
   process.stdout.write('---[ REPORT ]---\n');
   process.stdout.write(`Increased ${increasedTotal} times\n`);
   process.stdout.write('\n');
-
 
 })();
 
