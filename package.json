@@ -1,0 +1,21 @@
+{
+  "name": "aoc-2021",
+  "version": "1.0.0",
+  "description": "Repository to hold solutions to the advent of code challenges, 2021 edition",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rm -rf dist ; cp -r assets dist ; esbuild $(aaargh config.build.json)"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@git.finwo.net:aoc-2021"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "aaargh": "^1.0.3",
+    "esbuild": "^0.14.2",
+    "readline": "^1.3.0"
+  }
+}
