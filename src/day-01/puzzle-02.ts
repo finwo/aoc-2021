@@ -12,7 +12,7 @@ let texts = [
 
 (async () => {
 
-  await lineByLine(__dirname + '/input-01', line => {
+  await lineByLine(__dirname + '/input', line => {
     if ((!line) || isNaN(line)) return;
     const depth = parseInt(line);
     history.push(depth);

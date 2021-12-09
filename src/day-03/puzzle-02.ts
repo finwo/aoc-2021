@@ -1,35 +1,70 @@
-import { lineByLine } from '../common';
+import {
+  lineByLine,
+  weightedValues,
+  mostWeightedValue
+} from '../common';
 
-const position = { x: 0, y: 0 };
-let   aim      = 0;
+// let values = null;
+// let lines  = 0;
 
 (async () => {
 
-  await lineByLine(__dirname + '/input-01', line => {
+  // Read whole input into memory this time
+  const storage = [];
+  await lineByLine(__dirname + '/input', line => {
     if (!line) return;
-    let [command,range] = line.split(' ');
-    range = parseInt(range);
-
-    switch(command) {
-      case 'up'     : aim -= range; break;
-      case 'down'   : aim += range; break;
-      case 'forward': position.x += range; position.y += aim * range; break;
-      default:
-        throw new Error(`Unknown command: ${command}`);
-    }
+    storage.push(line.split('').map(v => parseInt(v, 2)));
   });
+
+  // The things we need to filter
+  let oxygenReadings   = storage.slice();
+  let scrubberReadings = storage.slice();
+
+  // Filter the oxygen readings
+  for(let idx = 0 ; oxygenReadings.length > 1 ; idx++) {
+    const column     = oxygenReadings.map(a => a[idx]);
+    const weights    = weightedValues(column);
+    let   mostCommon = mostWeightedValue(weights, false);
+
+    // Equal = 1, as specified
+    if (mostCommon === undefined) {
+      mostCommon = 1;
+    }
+
+    // Remove non-matching values
+    oxygenReadings = oxygenReadings.filter(v => v[idx] == mostCommon);
+  }
+
+  // Filter the scrubber readings
+  for(let idx = 0 ; scrubberReadings.length > 1 ; idx++) {
+    const column     = scrubberReadings.map(a => a[idx]);
+    const weights    = weightedValues(column);
+    let   mostCommon = mostWeightedValue(weights, false);
+
+    // Equal = 1, as inverted of specified
+    if (mostCommon === undefined) {
+      mostCommon = 1;
+    }
+
+    // Invert, we're working binary-ish
+    const leastCommon = (!mostCommon) | 0;
+
+    // Remove non-matching values
+    scrubberReadings = scrubberReadings.filter(v => v[idx] == leastCommon);
+  }
+
+  // Convert into numbers again
+  const oxygenRating      = parseInt(oxygenReadings[0].join(''), 2);
+  const scrubberRating    = parseInt(scrubberReadings[0].join(''), 2);
+  const lifeSupportRating = oxygenRating * scrubberRating;
 
   process.stdout.write('\n\n');
   process.stdout.write('---[ REPORT ]---\n');
   process.stdout.write('\n');
-  process.stdout.write(`Position\n`);
-  process.stdout.write(`  X: ${position.x}\n`);
-  process.stdout.write(`  Y: ${position.y}\n`);
+  process.stdout.write(`oxygen rating       : ${oxygenRating}\n`);
+  process.stdout.write(`scrubber rating     : ${scrubberRating}\n`);
+  process.stdout.write(`life support rating : ${lifeSupportRating}\n`);
   process.stdout.write('\n');
-  process.stdout.write(`Puzzle\n`);
-  process.stdout.write(`  mult: ${position.x * position.y}\n`);
-  process.stdout.write('\n');
-
 
 })();
 

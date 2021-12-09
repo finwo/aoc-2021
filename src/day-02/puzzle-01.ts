@@ -4,7 +4,7 @@ const position = { x: 0, y: 0 };
 
 (async () => {
 
-  await lineByLine(__dirname + '/input-01', line => {
+  await lineByLine(__dirname + '/input', line => {
     if (!line) return;
     let [command,range] = line.split(' ');
     range = parseInt(range);
