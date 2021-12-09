@@ -1,4 +1,4 @@
-import { lineByLine } from '../common';
+import { lineByLine } from './line-by-line';
 
 const position = { x: 0, y: 0 };
 let   aim      = 0;
