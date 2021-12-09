@@ -1,4 +1,4 @@
-import { lineByLine } from '../common';
+import { lineByLine } from './line-by-line';
 
 let lastDepth      = null;
 let increasedTotal = 0;

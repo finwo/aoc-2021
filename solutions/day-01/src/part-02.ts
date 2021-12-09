@@ -1,4 +1,5 @@
-import { lineByLine, sum } from '../common';
+import { lineByLine } from './line-by-line';
+import { sum        } from './sum';
 
 let history        = [];
 let sumLast        = null;
