@@ -1,4 +1,4 @@
-import { lineByLine } from '../common';
+import { lineByLine } from './line-by-line';
 
 let values = null;
 let lines  = 0;

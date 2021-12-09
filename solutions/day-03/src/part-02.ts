@@ -1,11 +1,6 @@
-import {
-  lineByLine,
-  weightedValues,
-  mostWeightedValue
-} from '../common';
-
-// let values = null;
-// let lines  = 0;
+import { lineByLine } from './line-by-line';
+import { weightedValues } from './weighted-values';
+import { mostWeightedValue } from './most-weighted-value';
 
 (async () => {
 
