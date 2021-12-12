@@ -1,13 +1,17 @@
 import { Service, Container } from 'typedi';
 import { lineByLine } from '@common/line-by-line';
 
+import { BingoController } from './bingo.controller';
+
 import { Board } from './model/board';
 import { Game } from './model/game';
 
 @Service()
 export class BingoModule {
 
-  constructor() {
+  constructor(
+    private bingoController: BingoController
+  ) {
     this.initializeDb();
   }
 
@@ -24,7 +28,11 @@ export class BingoModule {
 
       // Task defined first line as already-drawn numbers
       if (!game) {
-        game = new Game({ drawn: line.split(',').map(v => parseInt(v)), board: [] });
+        game = new Game({
+          name  : 'Base game',
+          drawn : line.split(',').map(v => parseInt(v)),
+          board : []
+        });
         db.game.push(game);
         return;
       }

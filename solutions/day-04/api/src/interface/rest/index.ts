@@ -19,7 +19,7 @@ export function Controller(prefix?: string): ClassDecorator {
       const path = ['',prefix,route.path].join('/').replace(/\/+/g,'/');
       router[route.method](path, async (req: Request, res: Response, next: Function) => {
         const controller = Container.get(constructor);
-        await controller[route.name]({ req, res });
+        await controller[route.name]({ req, res, ...req.params });
         if (!res.writableEnded) next();
       });
     }
